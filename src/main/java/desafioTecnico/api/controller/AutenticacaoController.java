@@ -1,6 +1,9 @@
 package desafioTecnico.api.controller;
 
 import desafioTecnico.api.entity.login.DadosCadastroLogin;
+import desafioTecnico.api.entity.login.Usuario;
+import desafioTecnico.api.security.security.DadosToken;
+import desafioTecnico.api.security.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +21,18 @@ public class AutenticacaoController {
     @Autowired
     private AuthenticationManager maneger;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     public ResponseEntity cadastroLogin (@RequestBody @Valid DadosCadastroLogin dados){
 
-        var token = new UsernamePasswordAuthenticationToken(dados.login(),dados.senha());
+        var authenticationtoken = new UsernamePasswordAuthenticationToken(dados.login(),dados.senha());
 
-        var autentication = maneger.authenticate(token);
+        var autentication = maneger.authenticate(authenticationtoken);
 
-        return ResponseEntity.ok().build();
+        var tokenJwt = tokenService.gerarToken((Usuario) authenticationtoken.getPrincipal());
+
+        return ResponseEntity.ok(new DadosToken(tokenJwt));
     }
 }
