@@ -27,7 +27,8 @@ public class SecurityConfiguration {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                  .and().authorizeHttpRequests()
                  .requestMatchers(HttpMethod.POST,"/login").permitAll()
-                 .anyRequest().authenticated().and().addFilterBefore(securityFiltro, UsernamePasswordAuthenticationFilter.class)
+                 .anyRequest().authenticated()
+                 .and().addFilterBefore(securityFiltro, UsernamePasswordAuthenticationFilter.class)
                  .build();
     }
 
@@ -38,7 +39,7 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-
         return new BCryptPasswordEncoder();
     }
+
 }

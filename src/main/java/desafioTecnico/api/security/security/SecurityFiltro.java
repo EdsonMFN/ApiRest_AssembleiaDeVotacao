@@ -34,6 +34,7 @@ public class SecurityFiltro extends OncePerRequestFilter {
 
             var autentication = new UsernamePasswordAuthenticationToken
                     (usuario,null,usuario.getAuthorities());
+
             SecurityContextHolder.getContext().setAuthentication(autentication);
         }
 
@@ -43,7 +44,7 @@ public class SecurityFiltro extends OncePerRequestFilter {
 
     private String recuperarToken(HttpServletRequest request) {
 
-        var authorizatioHerder = request.getHeader("Autorization");
+        var authorizatioHerder = request.getHeader("Authorization");
 
         if (authorizatioHerder != null){
             return authorizatioHerder.replace("Bearer", "");

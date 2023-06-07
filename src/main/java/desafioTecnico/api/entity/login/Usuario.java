@@ -31,12 +31,12 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return login;
+        return senha;
     }
 
     @Override
     public String getUsername() {
-        return senha;
+        return login;
     }
 
     @Override
