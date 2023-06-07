@@ -8,5 +8,5 @@ public record DadosCadastroAssociado(
         @NotBlank
         String nome,
         @NotBlank
-        String voto) {
+        Voto voto) {
 }

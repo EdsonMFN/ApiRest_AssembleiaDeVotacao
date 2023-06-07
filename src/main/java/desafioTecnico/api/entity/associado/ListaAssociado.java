@@ -1,6 +1,6 @@
 package desafioTecnico.api.entity.associado;
 
-public record ListaAssociado(Long id, String nome, String voto) {
+public record ListaAssociado(Long id, String nome, Voto voto) {
 
     public ListaAssociado (Associado associado){
 

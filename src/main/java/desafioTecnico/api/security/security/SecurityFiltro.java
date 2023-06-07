@@ -32,13 +32,12 @@ public class SecurityFiltro extends OncePerRequestFilter {
             var subject = tokenService.validacaoToken(tokenJwt);
             var usuario = repositoryUsuario.findByLogin(subject);
 
-            var autentication = new UsernamePasswordAuthenticationToken
-                    (usuario,null,usuario.getAuthorities());
+            var autentication = new UsernamePasswordAuthenticationToken(usuario,null,usuario.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(autentication);
         }
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
 
     }
 

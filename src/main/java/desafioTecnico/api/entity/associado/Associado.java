@@ -16,7 +16,9 @@ public class Associado {
     private Long id;
 
     private String nome;
-    private String voto;
+
+    @Enumerated(EnumType.STRING)
+    private Voto voto;
 
     public Associado(DadosCadastroAssociado dados) {
 
