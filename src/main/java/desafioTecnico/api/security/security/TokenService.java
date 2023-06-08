@@ -14,6 +14,7 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
+
     @Value("${api.security.token.secret}")
     private String secret;
 
@@ -31,10 +32,10 @@ public class TokenService {
         }
     }
 
-    public String validacaoToken(String tokenJwt){
+    public String getSubject(String tokenJwt){
         try {
             var algoritimo = Algorithm.HMAC256(secret);
-                return JWT.require(algoritimo)
+            return JWT.require(algoritimo)
                         .withIssuer("desafio_tecnico")
                         .build()
                         .verify(tokenJwt)

@@ -29,7 +29,8 @@ public class SecurityFiltro extends OncePerRequestFilter {
         var tokenJwt = recuperarToken(request);
 
         if (tokenJwt != null){
-            var subject = tokenService.validacaoToken(tokenJwt);
+
+            var subject = tokenService.getSubject(tokenJwt);
             var usuario = repositoryUsuario.findByLogin(subject);
 
             var autentication = new UsernamePasswordAuthenticationToken(usuario,null,usuario.getAuthorities());
@@ -46,7 +47,7 @@ public class SecurityFiltro extends OncePerRequestFilter {
         var authorizatioHerder = request.getHeader("Authorization");
 
         if (authorizatioHerder != null){
-            return authorizatioHerder.replace("Bearer", "");
+            return authorizatioHerder.replace("Bearer ", "");
         }
         return null;
     }
