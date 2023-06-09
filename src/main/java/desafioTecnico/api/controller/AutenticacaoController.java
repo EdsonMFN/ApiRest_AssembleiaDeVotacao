@@ -3,7 +3,7 @@ package desafioTecnico.api.controller;
 import desafioTecnico.api.entity.login.DadosCadastroLogin;
 import desafioTecnico.api.entity.login.Usuario;
 import desafioTecnico.api.security.security.DadosToken;
-import desafioTecnico.api.security.security.TokenService;
+import desafioTecnico.api.service.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

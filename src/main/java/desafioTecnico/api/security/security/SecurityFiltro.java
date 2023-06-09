@@ -1,6 +1,7 @@
 package desafioTecnico.api.security.security;
 
 import desafioTecnico.api.repository.RepositoryUsuario;
+import desafioTecnico.api.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

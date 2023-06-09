@@ -1,4 +1,4 @@
-package desafioTecnico.api.security.security;
+package desafioTecnico.api.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

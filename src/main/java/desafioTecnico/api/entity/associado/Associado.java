@@ -1,5 +1,6 @@
 package desafioTecnico.api.entity.associado;
 
+import desafioTecnico.api.entity.voto.Voto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,13 +17,19 @@ public class Associado {
 
     private String nome;
 
-    @Enumerated(EnumType.STRING)
+    @Column(name = "cpf")
+    private String cpf;
+
+    @OneToMany
+    @Column
+    @JoinColumn(name = "voto")
     private Voto voto;
 
     public Associado(DadosCadastroAssociado dados) {
 
         this.id = dados.id();
         this.nome = dados.nome();
+        this.cpf = dados.cpf();
         this.voto = dados.voto();
     }
 

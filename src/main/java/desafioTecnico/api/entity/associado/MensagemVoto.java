@@ -1,6 +1,6 @@
 package desafioTecnico.api.entity.associado;
 
-public enum Voto {
+public enum MensagemVoto {
     SIM,
     NÃO;
 }
