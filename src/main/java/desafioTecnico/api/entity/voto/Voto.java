@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.mapping.ToOne;
+
 import java.time.LocalDateTime;
 
 @Table(name = "voto")
@@ -18,7 +20,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of = "id")
 public class Voto {
     @Id
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_associado")
     private Associado associado;
 

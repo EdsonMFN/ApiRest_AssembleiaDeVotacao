@@ -3,18 +3,15 @@ package desafioTecnico.api.entity.sessaoVotacao;
 import desafioTecnico.api.entity.pauta.Pauta;
 import desafioTecnico.api.entity.voto.Voto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 @Table(name = "sessao_votacao")
-@Entity(name = "Sessao_votacao")
+@Entity(name = "SessaoVotacao")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -31,11 +28,19 @@ public class SessaoVotacao {
     @Column(name = "fim_votacao")
     private LocalDateTime fimVotacao;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_pauta")
     private Pauta pauta;
 
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "sessaoVotacao", cascade = CascadeType.ALL)
-    private Collection<Voto> voto = new LinkedHashSet<Voto>();
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "sessaoVotacao", cascade = CascadeType.ALL)
+    private List<Voto> votos = (List<Voto>) new LinkedHashSet<Voto>();
 
+    public SessaoVotacao(Long id, LocalDateTime inicioVotacao, LocalDateTime fimVotacao, Pauta pauta) {
+
+        this.id = id;
+        this.inicioVotacao = inicioVotacao;
+        this.fimVotacao = fimVotacao;
+        this.pauta = pauta;
+        this.votos = new ArrayList<Voto>();
+    }
 }

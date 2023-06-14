@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/sessaoVotacao")
 public class SessaoVotacaoController {
 
-    @PostMapping("/")
-    public ResponseEntity cadastroSessao(@RequestBody@Valid DadosCadastroSessao dados){
+    @PostMapping
+    public ResponseEntity cadastroSessao(){
 
         return ResponseEntity.ok().build();
     }
