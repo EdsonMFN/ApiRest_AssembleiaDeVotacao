@@ -17,8 +17,9 @@ import java.util.*;
 @EqualsAndHashCode(of = "id")
 public class SessaoVotacao {
 
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_sessao_votacao")
     @PrimaryKeyJoinColumns(value = {@PrimaryKeyJoinColumn})
     private Long id;
 
@@ -33,7 +34,7 @@ public class SessaoVotacao {
     private Pauta pauta;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "sessaoVotacao", cascade = CascadeType.ALL)
-    private List<Voto> votos = (List<Voto>) new LinkedHashSet<Voto>();
+    private List<Voto> votos;
 
     public SessaoVotacao(Long id, LocalDateTime inicioVotacao, LocalDateTime fimVotacao, Pauta pauta) {
 

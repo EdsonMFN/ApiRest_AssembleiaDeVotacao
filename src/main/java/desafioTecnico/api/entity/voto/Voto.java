@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.mapping.ToOne;
+import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 
 import java.time.LocalDateTime;
 
@@ -19,12 +20,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Voto {
+
     @Id
-    @OneToOne
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_voto")
+    @PrimaryKeyJoinColumns(value = {@PrimaryKeyJoinColumn})
+    private Long id;
+
+    @OneToMany
     @JoinColumn(name = "id_associado")
     private Associado associado;
 
-    @Column (name = "data")
+    @Column(name = "data")
     private LocalDateTime data;
 
     @Column(name = "mensagem_voto")
