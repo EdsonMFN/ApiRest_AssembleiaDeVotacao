@@ -21,9 +21,8 @@ public class Associado {
     @Column(name = "cpf")
     private String cpf;
 
-    @OneToMany
-    @Column
-    @JoinColumn(name = "voto")
+    @OneToOne
+    @JoinColumn(name = "id_voto")
     private Voto voto;
 
     public Associado(DadosCadastroAssociado dados) {

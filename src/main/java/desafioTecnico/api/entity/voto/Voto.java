@@ -8,10 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.mapping.ToOne;
-import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "voto")
 @Entity(name = "Voto")
@@ -27,12 +26,12 @@ public class Voto {
     @PrimaryKeyJoinColumns(value = {@PrimaryKeyJoinColumn})
     private Long id;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "id_associado")
     private Associado associado;
 
-    @Column(name = "data")
-    private LocalDateTime data;
+    @Column(name = "dataHora_voto")
+    private LocalDateTime dataHoraVoto;
 
     @Column(name = "mensagem_voto")
     @Enumerated(EnumType.STRING)
@@ -41,4 +40,6 @@ public class Voto {
     @ManyToOne
     @JoinColumn(name = "id_sessao_votacao")
     private SessaoVotacao sessaoVotacao;
+
+
 }
