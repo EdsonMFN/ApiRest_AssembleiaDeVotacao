@@ -14,6 +14,8 @@ import lombok.*;
 public class Associado {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_associado")
+    @PrimaryKeyJoinColumns(value = {@PrimaryKeyJoinColumn})
     private Long id;
 
     private String nome;

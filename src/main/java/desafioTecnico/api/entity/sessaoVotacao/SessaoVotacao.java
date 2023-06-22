@@ -1,6 +1,5 @@
 package desafioTecnico.api.entity.sessaoVotacao;
 
-import desafioTecnico.api.entity.associado.MensagemVoto;
 import desafioTecnico.api.entity.pauta.Pauta;
 import desafioTecnico.api.entity.voto.Voto;
 import jakarta.persistence.*;
@@ -34,25 +33,18 @@ public class SessaoVotacao {
     @JoinColumn(name = "id_pauta")
     private Pauta pauta;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "sessaoVotacao", cascade = CascadeType.ALL)
-    private List<Voto> votos;
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "sessaoVotacao", cascade = CascadeType.ALL)
+    private List<Voto> votosSim;
 
-    public List<Voto> votos(){
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "sessaoVotacao", cascade = CascadeType.ALL)
+    private List<Voto> votosNao;
 
-        List<Voto> votoSim = getVotos();
-        List<Voto> votoNão = getVotos();
-
-        if (votoSim ==){
-
-        }
-    }
-
-    public SessaoVotacao(Long id, LocalDateTime inicioVotacao, LocalDateTime fimVotacao, Pauta pauta) {
-
+     public SessaoVotacao(Long id, LocalDateTime inicioVotacao, LocalDateTime fimVotacao, Pauta pauta) {
         this.id = id;
         this.inicioVotacao = inicioVotacao;
         this.fimVotacao = fimVotacao;
         this.pauta = pauta;
-        this.votos = new ArrayList<Voto>();
+        this.votosSim = new ArrayList<Voto>();
+        this.votosNao = new ArrayList<Voto>();
     }
 }

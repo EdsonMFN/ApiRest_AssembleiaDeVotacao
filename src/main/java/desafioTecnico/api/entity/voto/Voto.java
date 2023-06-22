@@ -4,17 +4,14 @@ import desafioTecnico.api.entity.associado.Associado;
 import desafioTecnico.api.entity.associado.MensagemVoto;
 import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacao;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Table(name = "voto")
 @Entity(name = "Voto")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -41,5 +38,11 @@ public class Voto {
     @JoinColumn(name = "id_sessao_votacao")
     private SessaoVotacao sessaoVotacao;
 
+    public Voto(Long id, LocalDateTime dataHoraVoto, MensagemVoto mensagemVoto, SessaoVotacao sessaoVotacao){
 
+        this.id = id;
+        this.dataHoraVoto = dataHoraVoto;
+        this.mensagemVoto = mensagemVoto;
+        this.sessaoVotacao = sessaoVotacao;
+    }
 }
