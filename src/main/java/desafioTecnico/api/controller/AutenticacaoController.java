@@ -25,7 +25,7 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity cadastroLogin (@RequestBody @Valid DadosCadastroLogin dados){
+    public ResponseEntity criarLogin (@RequestBody @Valid DadosCadastroLogin dados){
 
         var authenticationtoken = new UsernamePasswordAuthenticationToken(dados.login(),dados.senha());
 

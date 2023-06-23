@@ -1,4 +1,4 @@
-package desafioTecnico.api.service.response;
+package desafioTecnico.api.controller.response;
 
 import desafioTecnico.api.entity.associado.Associado;
 import desafioTecnico.api.entity.associado.MensagemVoto;

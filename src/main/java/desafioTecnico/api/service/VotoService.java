@@ -3,8 +3,8 @@ package desafioTecnico.api.service;
 import desafioTecnico.api.entity.associado.Associado;
 import desafioTecnico.api.entity.associado.MensagemVoto;
 import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacao;
-import desafioTecnico.api.service.resquest.RequestVoto;
-import desafioTecnico.api.service.response.ResponseVoto;
+import desafioTecnico.api.controller.resquest.RequestVoto;
+import desafioTecnico.api.controller.response.ResponseVoto;
 import desafioTecnico.api.entity.voto.Voto;
 import desafioTecnico.api.repository.RepositorySessao;
 import desafioTecnico.api.repository.RepositoryAssociado;
@@ -32,7 +32,7 @@ public class VotoService {
         return LocalDateTime.now();
     }
 
-    public ResponseVoto cadastroVoto(Long idSessaoVotacao, RequestVoto requestVoto){
+    public ResponseVoto criarVoto(Long idSessaoVotacao, ResponseVoto responseVoto, RequestVoto requestVoto){
 
         Associado associado = repositoryAssociado.findByCpf(requestVoto.getCpf());
         LocalDateTime dataVoto = dataVoto();

@@ -1,4 +1,4 @@
-package desafioTecnico.api.service.resquest;
+package desafioTecnico.api.controller.resquest;
 
 import desafioTecnico.api.entity.associado.MensagemVoto;
 import lombok.Getter;
