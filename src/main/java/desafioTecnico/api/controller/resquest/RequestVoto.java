@@ -1,4 +1,4 @@
-package desafioTecnico.api.service.resquest;
+package desafioTecnico.api.controller.resquest;
 
 import desafioTecnico.api.entity.associado.MensagemVoto;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class RequestVoto {
 
-    private String cpf;
+    private String cpfAssociado;
 
     private MensagemVoto mensagemVoto;
 

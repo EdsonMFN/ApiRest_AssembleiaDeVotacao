@@ -1,11 +1,15 @@
 package desafioTecnico.api.service;
 
 import desafioTecnico.api.entity.associado.Associado;
+import desafioTecnico.api.entity.associado.AssociadoDTO;
 import desafioTecnico.api.entity.associado.MensagemVoto;
+import desafioTecnico.api.entity.pauta.PautaDTO;
 import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacao;
-import desafioTecnico.api.service.resquest.RequestVoto;
-import desafioTecnico.api.service.response.ResponseVoto;
+import desafioTecnico.api.controller.resquest.RequestVoto;
+import desafioTecnico.api.controller.response.ResponseVoto;
+import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacaoDTO;
 import desafioTecnico.api.entity.voto.Voto;
+import desafioTecnico.api.entity.voto.VotoDto;
 import desafioTecnico.api.repository.RepositorySessao;
 import desafioTecnico.api.repository.RepositoryAssociado;
 import desafioTecnico.api.repository.RepositoryVoto;
@@ -13,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,36 +37,117 @@ public class VotoService {
         return LocalDateTime.now();
     }
 
-    public ResponseVoto cadastroVoto(Long idSessaoVotacao, RequestVoto requestVoto){
+    public ResponseVoto criarVoto(Long idSessaoVotacao, String cpfAssociado, RequestVoto requestVoto){
 
-        Associado associado = repositoryAssociado.findByCpf(requestVoto.getCpf());
-        LocalDateTime dataVoto = dataVoto();
+        Associado associado = repositoryAssociado.findByCpf(cpfAssociado);
         Optional<SessaoVotacao> sessao = repositorySessao.findById(idSessaoVotacao);
         Voto voto = new Voto();
         voto.setAssociado(associado);
-        voto.setDataHoraVoto(dataVoto);
+        voto.setDataHoraVoto(dataVoto());
         voto.setMensagemVoto(requestVoto.getMensagemVoto());
         voto.setSessaoVotacao(sessao.get());
         voto = repositoryVoto.save(voto);
 
-
-        if (voto.getMensagemVoto() == MensagemVoto.SIM){
+        if (MensagemVoto.SIM.equals(voto.getMensagemVoto())){
 
             sessao.get().getVotosSim().add(voto);
             repositorySessao.save(sessao.get());
-
         }else {
-
             sessao.get().getVotosNao().add(voto);
             repositorySessao.save(sessao.get());
-
         }
-        return new ResponseVoto(voto);
+
+        PautaDTO pautaDto = new PautaDTO();
+        pautaDto.setId(sessao.get().getPauta().getId());
+        pautaDto.setTopico(sessao.get().getPauta().getTopico());
+        pautaDto.setMensagem(sessao.get().getPauta().getMensagem());
+
+        SessaoVotacaoDTO sessaoDto = new SessaoVotacaoDTO();
+        sessaoDto.setId(sessao.get().getId());
+        sessaoDto.setFimVotacao(sessao.get().getFimVotacao());
+        sessaoDto.setInicioVotacao(sessao.get().getInicioVotacao());
+        sessaoDto.setPauta(pautaDto);
+
+        List<VotoDto> votoDto = new ArrayList<>();
+        sessaoDto.setVotosSim(votoDto);
+        sessaoDto.setVotosNao(votoDto);
+
+        ResponseVoto responseVoto = new ResponseVoto();
+        responseVoto.setSessaoVotacao(sessaoDto);
+
+
+
+        return responseVoto;
     }
-    public List<ResponseVoto> listagemVoto(){
+    public ResponseVoto listagemVoto(Long idSessaoVotacao){
 
-        List<Voto> votos = repositoryVoto.findAll();
+        Optional<SessaoVotacao> sessao = repositorySessao.findById(idSessaoVotacao);
 
-        return votos.stream().map(ResponseVoto::new).toList();
+        PautaDTO pautaDto = new PautaDTO();
+        pautaDto.setId(sessao.get().getPauta().getId());
+        pautaDto.setTopico(sessao.get().getPauta().getTopico());
+        pautaDto.setMensagem(sessao.get().getPauta().getMensagem());
+
+        SessaoVotacaoDTO sessaoDto = new SessaoVotacaoDTO();
+        sessaoDto.setId(sessao.get().getId());
+        sessaoDto.setFimVotacao(sessao.get().getFimVotacao());
+        sessaoDto.setInicioVotacao(sessao.get().getInicioVotacao());
+        sessaoDto.setPauta(pautaDto);
+
+        ResponseVoto responseVoto = new ResponseVoto();
+        responseVoto.setSessaoVotacao(sessaoDto);
+
+        List<Voto> votos = repositoryVoto.findBySessaoVotacao(sessao.get());
+        List<ResponseVoto> responseVotos = new ArrayList<>();
+        List<VotoDto> votosNao = new ArrayList<>();
+        List<VotoDto> votosSim = new ArrayList<>();
+        List<AssociadoDTO> associadosDTO = new ArrayList<>();
+
+
+        for (Voto voto : votos){
+
+            VotoDto votoDto = new VotoDto();
+            votoDto.setMensagemVoto(voto.getMensagemVoto());
+            votoDto.setCpfAssociado(voto.getAssociado().getCpf());
+
+            if (MensagemVoto.SIM.equals(voto.getMensagemVoto())){
+
+                sessaoDto.setVotosSim(votosSim);
+                sessaoDto.setCpfAssociados(associadosDTO);
+                sessaoDto.getVotosSim().add(votoDto);
+            }else {
+
+                sessaoDto.setVotosNao(votosNao);
+                sessaoDto.setCpfAssociados(associadosDTO);
+                sessaoDto.getVotosNao().add(votoDto);
+            }
+                responseVotos.add(responseVoto);
+        }
+        return responseVoto;
+    }
+
+    public ResponseVoto buscarDadosAssociado(String cpfAssociado){
+
+        Associado associado = repositoryAssociado.findByCpf(cpfAssociado);
+        Voto voto = repositoryVoto.findByAssociado(cpfAssociado);
+
+        SessaoVotacaoDTO sessaoVotacaoDTO = new SessaoVotacaoDTO();
+        sessaoVotacaoDTO.setId(voto.getSessaoVotacao().getId());
+
+        PautaDTO pautaDTO = new PautaDTO();
+        pautaDTO.setId(voto.getSessaoVotacao().getPauta().getId());
+
+        VotoDto votoDto = new VotoDto();
+        votoDto.setMensagemVoto(voto.getMensagemVoto());
+
+        AssociadoDTO associadoDTO = new AssociadoDTO();
+        associadoDTO.setCpf(associado.getCpf());
+        associadoDTO.setVotoDto(votoDto);
+        associadoDTO.setSessaoVotacaoDTO(sessaoVotacaoDTO);
+
+        ResponseVoto responseVoto = new ResponseVoto();
+        responseVoto.setCpfAssociadoDto(associadoDTO);
+
+        return responseVoto;
     }
 }

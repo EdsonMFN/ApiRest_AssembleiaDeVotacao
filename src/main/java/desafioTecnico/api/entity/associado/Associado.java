@@ -1,6 +1,5 @@
 package desafioTecnico.api.entity.associado;
 
-import desafioTecnico.api.entity.voto.Voto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,7 +7,6 @@ import lombok.*;
 @Entity (name = "Associado")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Associado {
@@ -17,28 +15,15 @@ public class Associado {
     @Column(name = "id_associado")
     @PrimaryKeyJoinColumns(value = {@PrimaryKeyJoinColumn})
     private Long id;
-
+    @Column (name = "nome")
     private String nome;
 
     @Column(name = "cpf")
-    private String cpf;
+        private String cpf;
 
-    @OneToOne
-    @JoinColumn(name = "id_voto")
-    private Voto voto;
-
-    public Associado(DadosCadastroAssociado dados) {
-
-        this.id = dados.id();
-        this.nome = dados.nome();
-        this.cpf = dados.cpf();
-        this.voto = dados.voto();
-    }
-
-    public void atualizarInformacaoAssociado(DadosAtualizacaoAssociado dados) {
-
-
-            this.nome = dados.nome();
-
+    public Associado(Long id, String nome, String cpf){
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
     }
 }

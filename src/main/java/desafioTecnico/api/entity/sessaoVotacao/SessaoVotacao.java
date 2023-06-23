@@ -1,5 +1,6 @@
 package desafioTecnico.api.entity.sessaoVotacao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import desafioTecnico.api.entity.pauta.Pauta;
 import desafioTecnico.api.entity.voto.Voto;
 import jakarta.persistence.*;
@@ -33,10 +34,12 @@ public class SessaoVotacao {
     @JoinColumn(name = "id_pauta")
     private Pauta pauta;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "sessaoVotacao", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
+    @Column(name = "idVotoSim")
     private List<Voto> votosSim;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "sessaoVotacao", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
+    @Column(name = "idVotoNao")
     private List<Voto> votosNao;
 
      public SessaoVotacao(Long id, LocalDateTime inicioVotacao, LocalDateTime fimVotacao, Pauta pauta) {
