@@ -3,8 +3,8 @@ package desafioTecnico.api.service;
 import desafioTecnico.api.entity.associado.Associado;
 import desafioTecnico.api.entity.associado.MensagemVoto;
 import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacao;
-import desafioTecnico.api.entity.voto.RequestVoto;
-import desafioTecnico.api.entity.voto.ResponseVoto;
+import desafioTecnico.api.service.resquest.RequestVoto;
+import desafioTecnico.api.service.response.ResponseVoto;
 import desafioTecnico.api.entity.voto.Voto;
 import desafioTecnico.api.repository.RepositorySessao;
 import desafioTecnico.api.repository.RepositoryAssociado;
@@ -62,6 +62,6 @@ public class VotoService {
 
         List<Voto> votos = repositoryVoto.findAll();
 
-        return votos.stream().map(voto-> new ResponseVoto(voto)).toList();
+        return votos.stream().map(ResponseVoto::new).toList();
     }
 }

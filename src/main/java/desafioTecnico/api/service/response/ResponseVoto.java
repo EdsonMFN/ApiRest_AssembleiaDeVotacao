@@ -1,8 +1,9 @@
-package desafioTecnico.api.entity.voto;
+package desafioTecnico.api.service.response;
 
 import desafioTecnico.api.entity.associado.Associado;
 import desafioTecnico.api.entity.associado.MensagemVoto;
 import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacao;
+import desafioTecnico.api.entity.voto.Voto;
 
 import java.time.LocalDateTime;
 
