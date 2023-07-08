@@ -33,10 +33,10 @@ public class VotoController {
         return ResponseEntity.ok(responseVoto);
     }
 
-    @GetMapping("/{cpfAssociado}")
-    public ResponseEntity<ResponseVoto> buscarDadosAssociado (@PathVariable String cpfAssociado){
+    @GetMapping("/{cpfAssociado}/{idSessaoVotacao}")
+    public ResponseEntity<ResponseVoto> buscarDadosAssociado (@PathVariable String cpfAssociado, @PathVariable Long idSessaoVotacao){
 
-        ResponseVoto responseVoto = votoService.buscarDadosAssociado(cpfAssociado);
+        ResponseVoto responseVoto = votoService.buscarDadosAssociado(cpfAssociado,idSessaoVotacao);
 
         return ResponseEntity.ok(responseVoto);
     }

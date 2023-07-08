@@ -101,8 +101,6 @@ public class VotoService {
         List<ResponseVoto> responseVotos = new ArrayList<>();
         List<VotoDto> votosNao = new ArrayList<>();
         List<VotoDto> votosSim = new ArrayList<>();
-        List<AssociadoDTO> associadosDTO = new ArrayList<>();
-
 
         for (Voto voto : votos){
 
@@ -113,41 +111,60 @@ public class VotoService {
             if (MensagemVoto.SIM.equals(voto.getMensagemVoto())){
 
                 sessaoDto.setVotosSim(votosSim);
-                sessaoDto.setCpfAssociados(associadosDTO);
                 sessaoDto.getVotosSim().add(votoDto);
             }else {
 
                 sessaoDto.setVotosNao(votosNao);
-                sessaoDto.setCpfAssociados(associadosDTO);
                 sessaoDto.getVotosNao().add(votoDto);
+
             }
                 responseVotos.add(responseVoto);
         }
         return responseVoto;
     }
 
-    public ResponseVoto buscarDadosAssociado(String cpfAssociado){
+    public ResponseVoto buscarDadosAssociado(String cpfAssociado, Long idSessaoVotacao){
 
         Associado associado = repositoryAssociado.findByCpf(cpfAssociado);
-        Voto voto = repositoryVoto.findByAssociado(cpfAssociado);
-
-        SessaoVotacaoDTO sessaoVotacaoDTO = new SessaoVotacaoDTO();
-        sessaoVotacaoDTO.setId(voto.getSessaoVotacao().getId());
+        Optional<SessaoVotacao> sessao = repositorySessao.findById(idSessaoVotacao);
 
         PautaDTO pautaDTO = new PautaDTO();
-        pautaDTO.setId(voto.getSessaoVotacao().getPauta().getId());
-
-        VotoDto votoDto = new VotoDto();
-        votoDto.setMensagemVoto(voto.getMensagemVoto());
+        pautaDTO.setId(sessao.get().getPauta().getId());
+        pautaDTO.setMensagem(sessao.get().getPauta().getMensagem());
+        pautaDTO.setTopico(sessao.get().getPauta().getTopico());
 
         AssociadoDTO associadoDTO = new AssociadoDTO();
         associadoDTO.setCpf(associado.getCpf());
-        associadoDTO.setVotoDto(votoDto);
-        associadoDTO.setSessaoVotacaoDTO(sessaoVotacaoDTO);
+
+        SessaoVotacaoDTO sessaoDTO = new SessaoVotacaoDTO();
+        sessaoDTO.setId(sessao.get().getId());
+        sessaoDTO.setPauta(pautaDTO);
 
         ResponseVoto responseVoto = new ResponseVoto();
-        responseVoto.setCpfAssociadoDto(associadoDTO);
+        responseVoto.setSessaoVotacao(sessaoDTO);
 
+        List<Voto> votos = repositoryVoto.findBySessaoVotacaoAndAssociado(sessao.get(),associado);
+        List<ResponseVoto> responseVotos = new ArrayList<>();
+        List<VotoDto> votosNao = new ArrayList<>();
+        List<VotoDto> votosSim = new ArrayList<>();
+
+        for (Voto voto : votos){
+
+            VotoDto votoDto = new VotoDto();
+            votoDto.setMensagemVoto(voto.getMensagemVoto());
+            votoDto.setCpfAssociado(cpfAssociado);
+
+            if (MensagemVoto.SIM.equals(voto.getMensagemVoto())){
+
+                sessaoDTO.setVotosSim(votosSim);
+                sessaoDTO.getVotosSim().add(votoDto);
+            }else {
+
+                sessaoDTO.setVotosNao(votosNao);
+                sessaoDTO.getVotosNao().add(votoDto);
+            }
+            responseVotos.add(responseVoto);
+        }
         return responseVoto;
     }
 }

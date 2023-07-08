@@ -12,5 +12,5 @@ public class AssociadoDTO {
 
     private String cpf;
     private VotoDto votoDto;
-    private SessaoVotacaoDTO sessaoVotacaoDTO;
+    private Long idSessaoVotacao;
 }

@@ -17,7 +17,6 @@ public class SessaoVotacaoDTO {
     private LocalDateTime inicioVotacao;
     private LocalDateTime fimVotacao;
     private PautaDTO pauta;
-    private List<AssociadoDTO> cpfAssociados;
     private List<VotoDto> votosSim;
     private List<VotoDto> votosNao;
 }
