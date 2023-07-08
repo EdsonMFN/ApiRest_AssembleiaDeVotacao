@@ -23,12 +23,22 @@ public class AssociadoService {
     @Autowired
     private RepositoryVoto repositoryVoto;
 
+<<<<<<< HEAD
     public ResponseAssociado criarAssociado(RequestAssociado requestAssociado){
 
         Associado associado = new Associado();
         associado.setNome(requestAssociado.getNome());
         associado.setCpf(requestAssociado.getCpf());
         associado = repositoryAssociado.save(associado);
+=======
+    public ResponseAssociado criarAssociado(Long idVoto, RequestAssociado requestAssociado, ResponseAssociado responseAssociado){
+
+        Optional<Voto> voto = repositoryVoto.findById(idVoto);
+        Associado associado = new Associado();
+        associado.setNome(requestAssociado.getNome());
+        associado.setCpf(requestAssociado.getCpf());
+        associado.setVoto(voto.get());
+>>>>>>> origin/master
 
         return new ResponseAssociado(associado);
     }
@@ -45,7 +55,10 @@ public class AssociadoService {
         Associado associado = new Associado();
         associado.setNome(requestAssociado.getNome());
         associado.setCpf(requestAssociado.getCpf());
+<<<<<<< HEAD
         associado = repositoryAssociado.save(associado);
+=======
+>>>>>>> origin/master
 
         return new ResponseAssociado(associado);
     }
