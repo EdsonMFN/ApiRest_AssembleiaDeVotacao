@@ -20,24 +20,31 @@ public class VotoController {
     @PostMapping("/{idSessaoVotacao}/{cpfAssociado}")
     public ResponseEntity<ResponseVoto> criarVoto (@PathVariable Long idSessaoVotacao,@PathVariable String cpfAssociado ,@RequestBody RequestVoto requestVoto){
 
-      ResponseVoto responseVoto = votoService.criarVoto(idSessaoVotacao,cpfAssociado,requestVoto);
+      ResponseVoto responseVotoCriar = votoService.criarVoto(idSessaoVotacao,cpfAssociado,requestVoto);
 
-      return ResponseEntity.ok(responseVoto);
+      return ResponseEntity.ok(responseVotoCriar);
     }
 
     @GetMapping("/{idSessaoVotacao}")
     public ResponseEntity<ResponseVoto> listarVoto(@PathVariable Long idSessaoVotacao){
 
-        ResponseVoto responseVoto = votoService.listagemVoto(idSessaoVotacao);
+        ResponseVoto responseVotoListar = votoService.listagemVoto(idSessaoVotacao);
 
-        return ResponseEntity.ok(responseVoto);
+        return ResponseEntity.ok(responseVotoListar);
     }
 
     @GetMapping("/{cpfAssociado}/{idSessaoVotacao}")
     public ResponseEntity<ResponseVoto> buscarDadosAssociado (@PathVariable String cpfAssociado, @PathVariable Long idSessaoVotacao){
 
-        ResponseVoto responseVoto = votoService.buscarDadosAssociado(cpfAssociado,idSessaoVotacao);
+        ResponseVoto responseVotoBuscar = votoService.buscarDadosAssociado(cpfAssociado,idSessaoVotacao);
 
-        return ResponseEntity.ok(responseVoto);
+        return ResponseEntity.ok(responseVotoBuscar);
+    }
+    @DeleteMapping("/{idSessaoVotacao}/{cpfAssociado}")
+    public ResponseEntity<ResponseVoto> deletarVoto(@PathVariable Long idSessaoVotacao, @PathVariable String cpfAssociado){
+
+        ResponseVoto responseVotoDeletar = votoService.deletarVoto(idSessaoVotacao, cpfAssociado);
+
+        return ResponseEntity.ok(responseVotoDeletar);
     }
 }

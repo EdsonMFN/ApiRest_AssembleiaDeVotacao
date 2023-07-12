@@ -1,5 +1,6 @@
 package desafioTecnico.api.entity.voto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import desafioTecnico.api.entity.associado.Associado;
 import desafioTecnico.api.entity.associado.MensagemVoto;
 import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacao;
@@ -37,12 +38,4 @@ public class Voto {
     @ManyToOne
     @JoinColumn(name = "id_sessao_votacao")
     private SessaoVotacao sessaoVotacao;
-
-    public Voto(Long id, LocalDateTime dataHoraVoto, MensagemVoto mensagemVoto, SessaoVotacao sessaoVotacao){
-
-        this.id = id;
-        this.dataHoraVoto = dataHoraVoto;
-        this.mensagemVoto = mensagemVoto;
-        this.sessaoVotacao = sessaoVotacao;
-    }
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class RequestAssociado {
 
+    private Long idAssociado;
     private String nome;
     private String cpf;
 }

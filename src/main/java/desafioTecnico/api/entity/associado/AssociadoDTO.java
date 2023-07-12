@@ -1,7 +1,5 @@
 package desafioTecnico.api.entity.associado;
 
-import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacaoDTO;
-import desafioTecnico.api.entity.voto.VotoDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class AssociadoDTO {
 
+    private Long idAssociado;
     private String cpf;
-    private VotoDto votoDto;
-    private Long idSessaoVotacao;
+    private String nome;
 }

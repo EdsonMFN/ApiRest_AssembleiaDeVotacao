@@ -35,19 +35,11 @@ public class SessaoVotacao {
     private Pauta pauta;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @Column(name = "idVotoSim")
+    @JoinColumn(name = "id_sessao_voto_sim")
     private List<Voto> votosSim;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @Column(name = "idVotoNao")
+    @JoinColumn(name = "id_sessao_voto_nao")
     private List<Voto> votosNao;
 
-     public SessaoVotacao(Long id, LocalDateTime inicioVotacao, LocalDateTime fimVotacao, Pauta pauta) {
-        this.id = id;
-        this.inicioVotacao = inicioVotacao;
-        this.fimVotacao = fimVotacao;
-        this.pauta = pauta;
-        this.votosSim = new ArrayList<Voto>();
-        this.votosNao = new ArrayList<Voto>();
-    }
 }

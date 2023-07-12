@@ -1,10 +1,14 @@
 package desafioTecnico.api.controller.response;
 
-import desafioTecnico.api.entity.pauta.Pauta;
+import desafioTecnico.api.entity.pauta.PautaDTO;
+import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacaoDTO;
+import desafioTecnico.api.entity.voto.MensagemSucesso;
+import lombok.Getter;
+import lombok.Setter;
 
-public record ResponsePauta(Long id, String topico, String mensagem) {
+@Getter
+@Setter
+public class ResponsePauta extends MensagemSucesso {
 
-    public ResponsePauta(Pauta pauta){
-        this(pauta.getId(), pauta.getTopico(), pauta.getMensagem());
-    }
+    private PautaDTO pautaDTO;
 }

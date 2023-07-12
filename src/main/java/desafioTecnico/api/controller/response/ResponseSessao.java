@@ -1,14 +1,14 @@
 package desafioTecnico.api.controller.response;
 
-import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacao;
-import desafioTecnico.api.entity.voto.Voto;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import desafioTecnico.api.entity.sessaoVotacao.SessaoVotacaoDTO;
+import desafioTecnico.api.entity.voto.MensagemSucesso;
+import lombok.Getter;
+import lombok.Setter;
 
-public record ResponseSessao(Long id,LocalDateTime inicioVotacao, LocalDateTime fimVotacao, List<Voto> votosSim, List<Voto> votosNao) {
+@Getter
+@Setter
+public class ResponseSessao extends MensagemSucesso {
 
-    public ResponseSessao (SessaoVotacao sessao){
-        this(sessao.getId(), sessao.getInicioVotacao(),sessao.getFimVotacao(),sessao.getVotosSim(),sessao.getVotosNao());
-    }
+    private SessaoVotacaoDTO sessaoVotacaoDTO;
 }

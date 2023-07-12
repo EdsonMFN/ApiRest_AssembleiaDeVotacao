@@ -19,5 +19,5 @@ public interface RepositoryVoto extends JpaRepository<Voto, Long> {
 
     Voto findAllByAssociado(Associado cpfAssociado);
 
-    List<Voto> findBySessaoVotacaoAndAssociado(SessaoVotacao sessaoVotacao, Associado associado);
+    Voto findBySessaoVotacaoAndAssociado(SessaoVotacao sessaoVotacao, Associado associado);
 }
