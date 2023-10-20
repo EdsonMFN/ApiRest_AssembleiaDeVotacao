@@ -1,6 +1,8 @@
 package assembleia.service;
 
 
+import assembleia.exception.handling.HandlerEntityNotFound;
+import assembleia.exception.handling.HandlerError;
 import assembleia.rest.response.ResponseAssociado;
 import assembleia.rest.resquest.RequestAssociado;
 import assembleia.domains.entity.associado.Associado;
@@ -21,67 +23,96 @@ public class AssociadoService {
 
     public ResponseAssociado criarAssociado(RequestAssociado requestAssociado){
 
-        Associado associado = new Associado();
-        associado.setCpf(requestAssociado.getCpf());
-        associado.setNome(requestAssociado.getNome());
-        repositoryAssociado.save(associado);
+        try {
+            Associado associado = new Associado();
+            associado.setCpf(requestAssociado.getCpf());
+            associado.setNome(requestAssociado.getNome());
+            repositoryAssociado.save(associado);
 
-        return new ResponseAssociado(AssociadoDTO
-                .builder()
-                .idAssociado(associado.getId())
-                .cpf(associado.getCpf())
-                .nome(associado.getNome())
-                .build());
+            return new ResponseAssociado(AssociadoDTO
+                    .builder()
+                    .idAssociado(associado.getId())
+                    .cpf(associado.getCpf())
+                    .nome(associado.getNome())
+                    .build());
+        }catch (Exception ex){
+            throw new HandlerError(ex.getMessage());
+        }
     }
     public ResponseAssociado buscarAssociado(String cpfAssociado){
 
-        Associado associado = repositoryAssociado.findByCpf(cpfAssociado);
+        try {
+            Associado associado = repositoryAssociado.findByCpf(cpfAssociado);
 
-        return new ResponseAssociado(AssociadoDTO
-                .builder()
-                .idAssociado(associado.getId())
-                .cpf(associado.getCpf())
-                .nome(associado.getNome())
-                .build());
+            return new ResponseAssociado(AssociadoDTO
+                    .builder()
+                    .idAssociado(associado.getId())
+                    .cpf(associado.getCpf())
+                    .nome(associado.getNome())
+                    .build());
+
+        }catch (Exception ex){
+            throw new HandlerError(ex.getMessage());
+        }
     }
     public List<ResponseAssociado> listarAssociado(){
-        List<Associado> associados = repositoryAssociado.findAll();
-        List<ResponseAssociado> responseAssociados = new ArrayList<>();
+        try {
+            List<Associado> associados = repositoryAssociado.findAll();
+            List<ResponseAssociado> responseAssociados = new ArrayList<>();
 
-        for (Associado associado : associados){
+            for (Associado associado : associados){
 
-            if (associado != null ){
+                if (associado != null ){
 
-                ResponseAssociado responseAssociado = new ResponseAssociado(AssociadoDTO
-                        .builder()
-                        .idAssociado(associado.getId())
-                        .cpf(associado.getCpf())
-                        .nome(associado.getNome())
-                        .build());
+                    ResponseAssociado responseAssociado = new ResponseAssociado(AssociadoDTO
+                            .builder()
+                            .idAssociado(associado.getId())
+                            .cpf(associado.getCpf())
+                            .nome(associado.getNome())
+                            .build());
 
-                responseAssociados.add(responseAssociado);
-            }else break;
+                    responseAssociados.add(responseAssociado);
+                }else break;
+            }
+            return responseAssociados;
+
+        }catch (Exception ex){
+            throw new HandlerError(ex.getMessage());
         }
-        return responseAssociados;
     }
-    public ResponseAssociado alterarAssociado (Long idAssociado, RequestAssociado requestAssociado){
+    public ResponseAssociado alterarAssociado (String cpfAssociado, RequestAssociado requestAssociado){
 
-        Associado associado = new Associado();
-        associado.setId(idAssociado);
-        associado.setNome(requestAssociado.getNome());
-        associado.setCpf(requestAssociado.getCpf());
-        repositoryAssociado.save(associado);
+        try {
+            Associado associado = repositoryAssociado.findByCpf(cpfAssociado);
 
-        return new ResponseAssociado(AssociadoDTO
-                .builder()
-                .idAssociado(associado.getId())
-                .cpf(associado.getCpf())
-                .nome(associado.getNome())
-                .build());
+            associado.setNome(requestAssociado.getNome());
+            associado.setCpf(requestAssociado.getCpf());
+            repositoryAssociado.save(associado);
+
+            return new ResponseAssociado(AssociadoDTO
+                    .builder()
+                    .idAssociado(associado.getId())
+                    .cpf(associado.getCpf())
+                    .nome(associado.getNome())
+                    .build());
+
+        }catch (HandlerEntityNotFound ex){
+            throw new HandlerEntityNotFound(ex.getMessage());
+        }catch (Exception ex){
+            throw new HandlerError(ex.getMessage());
+        }
     }
-    public void deletarAssociado(String cpfAssociado){
+    public String deletarAssociado(String cpfAssociado){
 
-        Associado associado = repositoryAssociado.findByCpf(cpfAssociado);
-        repositoryAssociado.delete(associado);
+        try {
+            Associado associado = repositoryAssociado.findByCpf(cpfAssociado);
+
+            repositoryAssociado.delete(associado);
+
+            return new ResponseAssociado(null).msgDelet();
+
+        }catch (Exception ex){
+            throw new HandlerError(ex.getMessage());
+        }
     }
 }

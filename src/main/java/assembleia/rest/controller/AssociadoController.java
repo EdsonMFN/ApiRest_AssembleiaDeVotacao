@@ -39,17 +39,17 @@ public class AssociadoController {
         return ResponseEntity.ok(responseAssociados);
     }
     @PutMapping("/{idAssociado}")
-    public ResponseEntity<ResponseAssociado> alterarAssociado(@PathVariable Long idAssociado, @RequestBody RequestAssociado requestAssociado){
+    public ResponseEntity<ResponseAssociado> alterarAssociado(@PathVariable String cpfAssociado, @RequestBody RequestAssociado requestAssociado){
 
-        ResponseAssociado responseAssociadoAlterar = associadoService.alterarAssociado(idAssociado,requestAssociado);
+        ResponseAssociado responseAssociadoAlterar = associadoService.alterarAssociado(cpfAssociado,requestAssociado);
 
         return ResponseEntity.ok(responseAssociadoAlterar);
     }
     @DeleteMapping("/cpf/{cpfAssociado}")
-    public ResponseEntity deletarAssociado(@PathVariable String cpfAssociado){
+    public ResponseEntity<String> deletarAssociado(@PathVariable String cpfAssociado){
 
-        associadoService.deletarAssociado(cpfAssociado);
+        String responseAssociado = associadoService.deletarAssociado(cpfAssociado);
 
-        return ResponseEntity.ok("Associado deletado com sucesso");
+        return ResponseEntity.ok(responseAssociado);
     }
 }

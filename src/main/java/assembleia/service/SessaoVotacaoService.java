@@ -1,14 +1,15 @@
 package assembleia.service;
 
 import assembleia.domains.entity.pauta.Pauta;
-import assembleia.domains.model.PautaDTO;
-import assembleia.exception.handling.HandlerEntityNotFound;
-import assembleia.rest.response.ResponseSessao;
 import assembleia.domains.entity.sessaoVotacao.SessaoVotacao;
+import assembleia.domains.model.PautaDTO;
 import assembleia.domains.model.SessaoVotacaoDTO;
 import assembleia.domains.repository.RepositoryPauta;
 import assembleia.domains.repository.RepositorySessao;
 import assembleia.domains.repository.RepositoryVoto;
+import assembleia.exception.handling.HandlerEntityNotFound;
+import assembleia.exception.handling.HandlerError;
+import assembleia.rest.response.ResponseSessao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SessaoVotacaoService {
@@ -42,25 +42,30 @@ public class SessaoVotacaoService {
         Pauta pauta = repositoryPauta.findById(idPauta).map(a->a)
                 .orElseThrow(() -> new HandlerEntityNotFound("Entidade com id " + idPauta + " não encontrada"));
 
-        SessaoVotacao sessao = new SessaoVotacao();
-        sessao.setInicioVotacao(LocalDateTime.now());
-        sessao.setFimVotacao(fimVotacao());
-        sessao.setPauta(pauta);
-        sessao = repositorySessao.save(sessao);
+        try {
+            SessaoVotacao sessao = new SessaoVotacao();
+            sessao.setInicioVotacao(LocalDateTime.now());
+            sessao.setFimVotacao(fimVotacao());
+            sessao.setPauta(pauta);
+            sessao = repositorySessao.save(sessao);
 
-        PautaDTO pautaDTO = PautaDTO
-                .builder()
-                .id(pauta.getId())
-                .topico(pauta.getTopico())
-                .mensagem(pauta.getMensagem())
-                .build();
+            PautaDTO pautaDTO = PautaDTO
+                    .builder()
+                    .id(pauta.getId())
+                    .topico(pauta.getTopico())
+                    .mensagem(pauta.getMensagem())
+                    .build();
 
-        return new ResponseSessao(SessaoVotacaoDTO
-                .builder()
-                .inicioVotacao(sessao.getInicioVotacao())
-                .fimVotacao(sessao.getFimVotacao())
-                .pauta(pautaDTO)
-                .build());
+            return new ResponseSessao(SessaoVotacaoDTO
+                    .builder()
+                    .inicioVotacao(sessao.getInicioVotacao())
+                    .fimVotacao(sessao.getFimVotacao())
+                    .pauta(pautaDTO)
+                    .build());
+
+        }catch (Exception ex){
+            throw new HandlerError(ex.getMessage());
+        }
     }
 
     public ResponseSessao buscarSessao (Long idSessaoVotacao){
@@ -70,53 +75,68 @@ public class SessaoVotacaoService {
 
         var pauta = sessao.getPauta();
 
-        PautaDTO pautaDTO = PautaDTO
-                .builder()
-                .id(pauta.getId())
-                .topico(pauta.getTopico())
-                .mensagem(pauta.getMensagem())
-                .build();
+       try {
+           PautaDTO pautaDTO = PautaDTO
+                   .builder()
+                   .id(pauta.getId())
+                   .topico(pauta.getTopico())
+                   .mensagem(pauta.getMensagem())
+                   .build();
 
-        return new ResponseSessao(SessaoVotacaoDTO
-                .builder()
-                .inicioVotacao(sessao.getInicioVotacao())
-                .fimVotacao(sessao.getFimVotacao())
-                .pauta(pautaDTO)
-                .build());
+           return new ResponseSessao(SessaoVotacaoDTO
+                   .builder()
+                   .inicioVotacao(sessao.getInicioVotacao())
+                   .fimVotacao(sessao.getFimVotacao())
+                   .pauta(pautaDTO)
+                   .build());
+
+       }catch (Exception ex){
+           throw new HandlerError(ex.getMessage());
+       }
     }
     public List<ResponseSessao> listarSessoes() {
-        List<SessaoVotacao> sessoes = repositorySessao.findAll();
-        List<ResponseSessao> responseSessoes = new ArrayList<>();
+        try {
+            List<SessaoVotacao> sessoes = repositorySessao.findAll();
+            List<ResponseSessao> responseSessoes = new ArrayList<>();
 
-        for (SessaoVotacao sessao : sessoes) {
+            for (SessaoVotacao sessao : sessoes) {
 
-            var pauta = sessao.getPauta();
+                var pauta = sessao.getPauta();
 
-            PautaDTO pautaDTO = PautaDTO
-                    .builder()
-                    .id(pauta.getId())
-                    .topico(pauta.getTopico())
-                    .mensagem(pauta.getMensagem())
-                    .build();
+                PautaDTO pautaDTO = PautaDTO
+                        .builder()
+                        .id(pauta.getId())
+                        .topico(pauta.getTopico())
+                        .mensagem(pauta.getMensagem())
+                        .build();
 
-            ResponseSessao responseSessao = new ResponseSessao(SessaoVotacaoDTO
-                    .builder()
-                    .inicioVotacao(sessao.getInicioVotacao())
-                    .fimVotacao(sessao.getFimVotacao())
-                    .pauta(pautaDTO)
-                    .build());
+                ResponseSessao responseSessao = new ResponseSessao(SessaoVotacaoDTO
+                        .builder()
+                        .inicioVotacao(sessao.getInicioVotacao())
+                        .fimVotacao(sessao.getFimVotacao())
+                        .pauta(pautaDTO)
+                        .build());
 
 
-            responseSessoes.add(responseSessao);
+                responseSessoes.add(responseSessao);
+            }
+
+            return responseSessoes;
+
+        }catch (Exception ex){
+            throw new HandlerError(ex.getMessage());
         }
-
-        return responseSessoes;
     }
     public void deletarSessaoVotacao(Long idSessaoVotacao){
 
         SessaoVotacao sessao = repositorySessao.findById(idSessaoVotacao).map(a->a)
                 .orElseThrow(() -> new HandlerEntityNotFound("Entidade com id " + idSessaoVotacao + " não encontrada"));
-        repositorySessao.delete(sessao);
+        try {
+            repositorySessao.delete(sessao);
+
+        }catch (Exception ex){
+            throw new HandlerError(ex.getMessage());
+        }
     }
 
     public Long incrementoTempoSessaoPadrao(){

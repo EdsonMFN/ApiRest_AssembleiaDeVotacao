@@ -13,4 +13,7 @@ public class ResponseAssociado{
     public ResponseAssociado(AssociadoDTO associadoDTO) {
         this.associadoDTO = associadoDTO;
     }
+    public String msgDelet() {
+        return "payment deleted successfully";
+    }
 }
