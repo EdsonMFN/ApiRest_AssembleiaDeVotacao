@@ -17,7 +17,7 @@ public class AssociadoController {
     @Autowired
     private AssociadoService associadoService;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<ResponseAssociado> criarAssociado(@RequestBody RequestAssociado requestAssociado){
 
         ResponseAssociado responseAssociadoCriar = associadoService.criarAssociado(requestAssociado);
@@ -31,14 +31,14 @@ public class AssociadoController {
 
         return ResponseEntity.ok(responseAssociadoCriar);
     }
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<ResponseAssociado>> listarAssociado(){
 
         List<ResponseAssociado> responseAssociados = associadoService.listarAssociado();
 
         return ResponseEntity.ok(responseAssociados);
     }
-    @PutMapping("/{idAssociado}")
+    @PutMapping("/cpf/{cpfAssociado}")
     public ResponseEntity<ResponseAssociado> alterarAssociado(@PathVariable String cpfAssociado, @RequestBody RequestAssociado requestAssociado){
 
         ResponseAssociado responseAssociadoAlterar = associadoService.alterarAssociado(cpfAssociado,requestAssociado);

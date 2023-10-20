@@ -5,7 +5,7 @@ import assembleia.exception.handling.HandlerEntityNotFound;
 import assembleia.exception.handling.HandlerError;
 import assembleia.rest.response.ResponseAssociado;
 import assembleia.rest.resquest.RequestAssociado;
-import assembleia.domains.entity.associado.Associado;
+import assembleia.domains.entity.Associado;
 import assembleia.domains.model.AssociadoDTO;
 import assembleia.domains.repository.RepositoryAssociado;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,7 @@ public class AssociadoService {
             Associado associado = new Associado();
             associado.setCpf(requestAssociado.getCpf());
             associado.setNome(requestAssociado.getNome());
+            associado.setEmail(requestAssociado.getEmail());
             repositoryAssociado.save(associado);
 
             return new ResponseAssociado(AssociadoDTO
@@ -34,6 +35,7 @@ public class AssociadoService {
                     .idAssociado(associado.getId())
                     .cpf(associado.getCpf())
                     .nome(associado.getNome())
+                    .email(associado.getEmail())
                     .build());
         }catch (Exception ex){
             throw new HandlerError(ex.getMessage());
@@ -49,6 +51,7 @@ public class AssociadoService {
                     .idAssociado(associado.getId())
                     .cpf(associado.getCpf())
                     .nome(associado.getNome())
+                    .email(associado.getEmail())
                     .build());
 
         }catch (Exception ex){
@@ -69,6 +72,7 @@ public class AssociadoService {
                             .idAssociado(associado.getId())
                             .cpf(associado.getCpf())
                             .nome(associado.getNome())
+                            .email(associado.getEmail())
                             .build());
 
                     responseAssociados.add(responseAssociado);
@@ -87,6 +91,7 @@ public class AssociadoService {
 
             associado.setNome(requestAssociado.getNome());
             associado.setCpf(requestAssociado.getCpf());
+            associado.setEmail(requestAssociado.getEmail());
             repositoryAssociado.save(associado);
 
             return new ResponseAssociado(AssociadoDTO
@@ -94,6 +99,7 @@ public class AssociadoService {
                     .idAssociado(associado.getId())
                     .cpf(associado.getCpf())
                     .nome(associado.getNome())
+                    .email(associado.getEmail())
                     .build());
 
         }catch (HandlerEntityNotFound ex){
@@ -109,7 +115,7 @@ public class AssociadoService {
 
             repositoryAssociado.delete(associado);
 
-            return new ResponseAssociado(null).msgDelet();
+            return new ResponseAssociado().msgDelet();
 
         }catch (Exception ex){
             throw new HandlerError(ex.getMessage());

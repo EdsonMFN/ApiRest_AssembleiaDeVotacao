@@ -30,7 +30,7 @@ public class SessaoVotacaoController {
 
         return ResponseEntity.ok(responseSessaoBuscar);
     }
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<ResponseSessao>> listarSessaoVotacao(){
 
         List<ResponseSessao> responseSessaoListar = sessaoVotacaoservice.listarSessoes();
@@ -38,10 +38,10 @@ public class SessaoVotacaoController {
         return ResponseEntity.ok(responseSessaoListar);
     }
     @DeleteMapping("/{idSessaoVotacao}")
-    public ResponseEntity deletarSessao(@PathVariable Long idSessaoVotacao){
+    public ResponseEntity<String> deletarSessao(@PathVariable Long idSessaoVotacao){
 
-        sessaoVotacaoservice.deletarSessaoVotacao(idSessaoVotacao);
+        String responseSessao = sessaoVotacaoservice.deletarSessaoVotacao(idSessaoVotacao);
 
-        return ResponseEntity.ok("Sessão deletada com sucesso");
+        return ResponseEntity.ok(responseSessao);
     }
 }

@@ -1,6 +1,6 @@
 package assembleia.domains.repository;
 
-import assembleia.domains.entity.associado.Associado;
+import assembleia.domains.entity.Associado;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

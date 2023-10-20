@@ -1,4 +1,4 @@
-package assembleia.domains.entity.pauta;
+package assembleia.domains.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,9 +16,10 @@ public class Pauta {
     @PrimaryKeyJoinColumns(value = {@PrimaryKeyJoinColumn})
     private Long id;
 
-    @Column(name = "topico")
+    @Column(name = "topico",nullable = false)
     private String topico;
 
+    @Column(name = "mensagem",nullable = false)
     private String mensagem;
 
 

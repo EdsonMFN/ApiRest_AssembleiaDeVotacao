@@ -1,6 +1,6 @@
 package assembleia.domains.repository;
 
-import assembleia.domains.entity.sessaoVotacao.SessaoVotacao;
+import assembleia.domains.entity.SessaoVotacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

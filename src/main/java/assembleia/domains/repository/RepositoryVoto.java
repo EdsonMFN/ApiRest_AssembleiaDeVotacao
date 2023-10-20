@@ -1,8 +1,8 @@
 package assembleia.domains.repository;
 
-import assembleia.domains.entity.associado.Associado;
-import assembleia.domains.entity.sessaoVotacao.SessaoVotacao;
-import assembleia.domains.entity.voto.Voto;
+import assembleia.domains.entity.Associado;
+import assembleia.domains.entity.SessaoVotacao;
+import assembleia.domains.entity.Voto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

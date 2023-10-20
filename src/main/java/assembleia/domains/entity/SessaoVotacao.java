@@ -1,7 +1,5 @@
-package assembleia.domains.entity.sessaoVotacao;
+package assembleia.domains.entity;
 
-import assembleia.domains.entity.pauta.Pauta;
-import assembleia.domains.entity.voto.Voto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +27,7 @@ public class SessaoVotacao {
     private LocalDateTime fimVotacao;
 
     @OneToOne
-    @JoinColumn(name = "id_pauta")
+    @JoinColumn(name = "id_pauta",nullable = false)
     private Pauta pauta;
 
     @OneToMany(fetch = FetchType.LAZY)

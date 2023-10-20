@@ -16,7 +16,7 @@ public class PautaController {
     @Autowired
     private PautaService pautaService;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<ResponsePauta> criarPauta(@RequestBody RequestPauta requestPauta ) {
 
         ResponsePauta responsePauta = pautaService.criarPauta(requestPauta);
@@ -30,7 +30,7 @@ public class PautaController {
 
         return ResponseEntity.ok(responsePautaCriar);
     }
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<ResponsePauta>> listarPauta(){
 
         List<ResponsePauta> responsePautaLista = pautaService.listarPauta();
@@ -38,10 +38,10 @@ public class PautaController {
         return ResponseEntity.ok(responsePautaLista);
     }
     @DeleteMapping("/{idPauta}")
-    public ResponseEntity deletarPauta(@PathVariable Long idPauta){
+    public ResponseEntity<String> deletarPauta(@PathVariable Long idPauta){
 
-        pautaService.deletarPauta(idPauta);
+        String responsePauta = pautaService.deletarPauta(idPauta);
 
-        return ResponseEntity.ok("Pauta deletada com sucesso");
+        return ResponseEntity.ok(responsePauta);
     }
 }

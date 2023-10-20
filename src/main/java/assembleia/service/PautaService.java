@@ -1,6 +1,6 @@
 package assembleia.service;
 
-import assembleia.domains.entity.pauta.Pauta;
+import assembleia.domains.entity.Pauta;
 import assembleia.domains.model.PautaDTO;
 import assembleia.domains.repository.RepositoryPauta;
 import assembleia.domains.repository.RepositorySessao;
@@ -83,12 +83,14 @@ public class PautaService {
            throw new HandlerError(ex.getMessage());
        }
     }
-    public void deletarPauta(Long idPauta){
+    public String deletarPauta(Long idPauta){
 
         Pauta pauta = repositoryPauta.findById(idPauta).map(a->a)
                 .orElseThrow(() -> new HandlerEntityNotFound("Entidade com id " + idPauta + " não encontrada"));
         try {
             repositoryPauta.delete(pauta);
+
+            return new ResponsePauta().msgDelet();
 
         }catch (Exception ex){
             throw new HandlerError(ex.getMessage());

@@ -1,10 +1,11 @@
-package assembleia.domains.entity.voto;
+package assembleia.domains.entity;
 
-import assembleia.domains.entity.associado.Associado;
 import assembleia.enums.MensagemVoto;
-import assembleia.domains.entity.sessaoVotacao.SessaoVotacao;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -23,17 +24,17 @@ public class Voto {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "id_associado")
+    @JoinColumn(name = "id_associado",nullable = false)
     private Associado associado;
 
-    @Column(name = "dataHora_voto")
+    @Column(name = "dataHora_voto",nullable = false)
     private LocalDateTime dataHoraVoto;
 
-    @Column(name = "mensagem_voto")
+    @Column(name = "mensagem_voto",nullable = false)
     @Enumerated(EnumType.STRING)
     private MensagemVoto mensagemVoto;
 
     @ManyToOne
-    @JoinColumn(name = "id_sessao_votacao")
+    @JoinColumn(name = "id_sessao_votacao",nullable = false)
     private SessaoVotacao sessaoVotacao;
 }

@@ -1,7 +1,7 @@
 package assembleia.service;
 
-import assembleia.domains.entity.pauta.Pauta;
-import assembleia.domains.entity.sessaoVotacao.SessaoVotacao;
+import assembleia.domains.entity.Pauta;
+import assembleia.domains.entity.SessaoVotacao;
 import assembleia.domains.model.PautaDTO;
 import assembleia.domains.model.SessaoVotacaoDTO;
 import assembleia.domains.repository.RepositoryPauta;
@@ -127,13 +127,14 @@ public class SessaoVotacaoService {
             throw new HandlerError(ex.getMessage());
         }
     }
-    public void deletarSessaoVotacao(Long idSessaoVotacao){
+    public String deletarSessaoVotacao(Long idSessaoVotacao){
 
         SessaoVotacao sessao = repositorySessao.findById(idSessaoVotacao).map(a->a)
                 .orElseThrow(() -> new HandlerEntityNotFound("Entidade com id " + idSessaoVotacao + " não encontrada"));
         try {
             repositorySessao.delete(sessao);
 
+            return new ResponseSessao().msgDelet();
         }catch (Exception ex){
             throw new HandlerError(ex.getMessage());
         }

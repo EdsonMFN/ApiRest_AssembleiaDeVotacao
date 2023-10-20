@@ -1,8 +1,8 @@
 package assembleia.service;
 
-import assembleia.domains.entity.associado.Associado;
-import assembleia.domains.entity.sessaoVotacao.SessaoVotacao;
-import assembleia.domains.entity.voto.Voto;
+import assembleia.domains.entity.Associado;
+import assembleia.domains.entity.SessaoVotacao;
+import assembleia.domains.entity.Voto;
 import assembleia.domains.model.PautaDTO;
 import assembleia.domains.model.SessaoVotacaoDTO;
 import assembleia.domains.model.VotoDto;

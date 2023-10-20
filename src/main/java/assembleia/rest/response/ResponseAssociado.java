@@ -2,10 +2,12 @@ package assembleia.rest.response;
 
 import assembleia.domains.model.AssociadoDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ResponseAssociado{
 
     private AssociadoDTO associadoDTO;
@@ -14,6 +16,6 @@ public class ResponseAssociado{
         this.associadoDTO = associadoDTO;
     }
     public String msgDelet() {
-        return "payment deleted successfully";
+        return "Associado deletado com sucesso";
     }
 }
